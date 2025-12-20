@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Russian River Wood Project</title>
+ <style>
+
+:root {
+  --bg: #f6f5f2;
+  --text: #1f1f1f;
+  --muted: #6b6b6b;
+  --accent: #2f6f62;
+  --card: #ffffff;
+}
+
+body.dark {
+  --bg: #0f1211;
+  --text: #e8e8e8;
+  --muted: #a0a0a0;
+  --accent: #7fd1c2;
+  --card: #1a1f1d;
+}
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    overflow-x: hidden;
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+  }
+
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 2rem 1.25rem 4rem;
+  }
+
+  /* === PIECE GALLERY (THE ONLY ONE THAT MATTERS) === */
+
+  .piece-gallery {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+  }
+
+  .piece-gallery img,
+  .piece-gallery video {
+    width: 100%;
+    aspect-ratio: 2 / 3;
+    object-fit: cover;
+    border-radius: 18px;
+    display: block;
+  }
+
+  .piece-gallery .media {
+    width: 100%;
+    aspect-ratio: 2 / 3;
+    border-radius: 18px;
+    overflow: hidden;
+  }
+
+  .piece-gallery .media video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* === CARDS === */
+
+  .card {
+    background: var(--card);
+    border-radius: 18px;
+    padding: 1.75rem;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+    margin-bottom: 2rem;
+  }
+
+  .buy {
+    display: inline-block;
+    margin-top: 1rem;
+    padding: 0.6rem 1.2rem;
+    background: var(--accent);
+    color: #fff;
+    border-radius: 999px;
+    font-weight: 600;
+  }
+
+/* Visual polish — SAFE */
+
+.piece-gallery {
+  gap: 1rem;
+}
+
+.piece-gallery img,
+.piece-gallery .media {
+  box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.piece-gallery img:hover,
+.piece-gallery .media:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 36px rgba(0,0,0,0.35);
+}
+
+.card {
+  padding: 2rem;
+}
+
+@media (max-width: 700px) {
+  .card {
+    padding: 1.25rem;
+  }
+}
+
+ h1, h2, h3 {
+      letter-spacing: -0.02em;
+    }
+
+    h2 {
+      color: var(--accent);
+    }
+
+    .subtitle {
+      color: var(--muted);
+      font-size: 1.05rem;
+    }
+
+    .highlight,
+    .donation {
+      background: rgba(47,111,98,0.12);
+      border-left: 4px solid var(--accent);
+      padding: 0.9rem 1.1rem;
+      border-radius: 12px;
+      font-weight: 500;
+    }
+
+    strong {
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    a {
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .card {
+      background: var(--card);
+      border-radius: 18px;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.25);
+    }
+
+/* === RESTORE DEPTH & CONTRAST === */
+
+.card {
+  background: linear-gradient(
+    180deg,
+    rgba(255,255,255,0.06),
+    rgba(255,255,255,0.02)
+  );
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,0.04),
+    0 20px 40px rgba(0,0,0,0.45);
+}
+
+.donation {
+  background: rgba(47,111,98,0.22);
+  box-shadow: inset 0 0 0 1px rgba(127,209,194,0.25);
+}
+
+.price {
+  color: var(--accent);
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+
+.piece {
+  margin-top: 1rem;
+}
+
+.piece h3 {
+  margin-top: 1.25rem;
+}
+
+/* === DONATION EVIDENCE === */
+
+.donation-summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(47,111,98,0.18);
+  padding: 1rem 1.25rem;
+  border-radius: 14px;
+  margin: 1.5rem 0;
+  font-size: 1.05rem;
+}
+
+.donation-summary strong {
+  font-size: 1.5rem;
+  color: var(--accent);
+}
+
+.donation-log {
+  display: grid;
+  gap: 1rem;
+}
+
+.donation-entry {
+  background: rgba(255,255,255,0.04);
+  border-radius: 14px;
+  padding: 1rem 1.25rem;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.05);
+}
+
+.donation-meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
+  color: var(--muted);
+  margin-bottom: 0.25rem;
+}
+
+.donation-amount {
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.donation-entry a {
+  font-size: 0.9rem;
+}
+
+body.dark .toggle {
+  background: #1a1f1d;
+}
+
+</style>
+
+</head>
+<body>
+  <div class="container">
+
+    <header>
+      <span class="badge">Limited Run • Handcrafted</span>
+      <button class="toggle" onclick="toggleDark()">🌙 / ☀️</button>
+      <h1>Russian River Wood Maps</h1>
+      <p class="subtitle">
+        Handcrafted laser-cut wood maps inspired by the Russian River waterway.
+        Each piece highlights the river’s form, flow, and ecological importance.
+      </p>
+    </header>
+
+<section class="card">
+  <div class="piece-gallery">
+
+    <img src="RRmp.png" alt="Original Poster" />
+    <img src="RRRR.png" alt="Concept Digital Map" />
+
+    <div class="media">
+      <video autoplay loop muted playsinline>
+        <source src="Laservid2p.mp4" type="video/mp4">
+      </video>
+    </div>
+
+    <img src="rrmpf.png" alt="Finished Map" />
+
+  </div>
+</section>
+
+    <section class="split">
+      <div class="card">
+        <h2>About the Project</h2>
+        <p>
+          These pieces were created as a fine art and conservation-focused project, 
+          using layered wood to represent the Russian River’s waterways.
+        </p>
+        <p>
+          Each map is produced in a limited quantity and sold in person. 
+          No two pieces are exactly the same.
+        </p>
+      </div>
+
+      <div class="card">
+        <h2>Pricing & Donation</h2>
+        <p class="price">$200</p>
+        <p class="donation">
+          $100 from each sale is donated to <strong>Respect Russian River</strong>, 
+          supporting conservation and education efforts.
+        </p>
+        <p>
+          Purchases are handled online and in person. This site exists to document the work and provide evidence of donations made. 
+        </p>
+      </div>
+    </section>
+
+    <section class="card">
+  <h2>Available Pieces</h2>
+
+  <div class="collection">
+
+    <!-- PIECE 1 -->
+    <div class="piece">
+      <div class="piece-gallery">
+        <img src="piece1-1.png" />
+        <img src="piece1-2.png" />
+        <img src="piece1-3.png" />
+        <!-- add up to 9 -->
+      </div>
+
+      <h3>Russian River Map — No. 1</h3>
+      <p class="price">$200</p>
+      <p class="donation">$100 donated to Respect Russian River</p>
+
+      <a
+        class="buy"
+        href="https://buy.stripe.com/YOUR_LINK_HERE"
+        target="_blank"
+      >
+        Purchase
+      </a>
+    </div>
+
+    <!-- Duplicate .piece blocks for each work -->
+
+  </div>
+</section>
+
+<section class="card">
+  <h2>Donation Record</h2>
+
+  <p class="subtitle">
+    A portion of every sale from this project is donated to
+    <strong>Respect Russian River</strong>. Below is a transparent record
+    of contributions made from sales of these pieces.
+  </p>
+
+  <div class="donation-summary">
+    <span>Total Donated</span>
+    <strong>$100</strong>
+  </div>
+
+  <div class="donation-log">
+
+    <div class="donation-entry">
+      <div class="donation-meta">
+        <span class="donation-date">Dec 14, 2025</span>
+        <span class="donation-amount">$100</span>
+      </div>
+      <p>
+        Donation from sale of <em>Russian River Map — No. 1</em>
+      </p>
+      <a
+        href="donation-proof-001.jpg"
+        target="_blank"
+        rel="noopener"
+      >
+        View proof
+      </a>
+    </div>
+
+    <!-- Duplicate donation-entry blocks as needed -->
+
+  </div>
+</section>
+
+    <section class="card">
+      <h2>Contact</h2>
+      <p>
+        Interested in seeing the work in person or have questions?
+      </p>
+      <p>
+        Email: <a href="chucklaw259@gmail.com">chucklaw259@gmail.com</a><br />
+      </p>
+    </section>
+
+    <footer>
+      © 2025 • Created by Chuck Law • All rights reserved
+    </footer>
+
+  </div>
+
+<script>
+  function toggleDark() {
+    document.body.classList.toggle("dark");
+
+    // Save preference
+    if (document.body.classList.contains("dark")) {
+      localStorage.setItem("theme", "dark");
+    } else {
+      localStorage.setItem("theme", "light");
+    }
+  }
+
+  // Load saved theme on page load
+  (function () {
+    const savedTheme = localStorage.getItem("theme");
+    if (savedTheme === "dark") {
+      document.body.classList.add("dark");
+    }
+  })();
+</script>
+
+</body>
+</html>
