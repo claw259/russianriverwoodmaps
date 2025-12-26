@@ -245,6 +245,47 @@ body.dark .toggle {
   background: #1a1f1d;
 }
 
+.carousel {
+  position: relative;
+  max-width: 500px;
+  margin: auto;
+  overflow: hidden;
+}
+
+.carousel-track {
+  display: flex;
+  transition: transform 0.4s ease;
+}
+
+.slide {
+  min-width: 100%;
+  text-align: center;
+}
+
+.slide img {
+  max-width: 100%;
+  border-radius: 8px;
+}
+
+.arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  font-size: 2rem;
+  cursor: pointer;
+  color: #2f6f62;
+}
+
+.arrow.left {
+  left: 10px;
+}
+
+.arrow.right {
+  right: 10px;
+}
+
 </style>
 
 </head>
@@ -264,7 +305,7 @@ body.dark .toggle {
 <section class="card">
   <div class="piece-gallery">
 
-    <img src="RRmp.png" alt="Original Poster" />
+    <img src="RRmpv2.png" alt="Original Poster" />
     <img src="RRRR.png" alt="Concept Digital Map" />
 
     <div class="media">
@@ -304,35 +345,44 @@ body.dark .toggle {
       </div>
     </section>
 
-    <section class="card">
+
+<section class="carousel-section">
   <h2>Available Pieces</h2>
 
-  <div class="collection">
+  <div class="carousel">
+    <button class="arrow left" onclick="prevSlide()">❮</button>
 
-    <!-- PIECE 1 -->
-    <div class="piece">
-      <div class="piece-gallery">
-        <img src="piece1-1.png" />
-        <img src="piece1-2.png" />
-        <img src="piece1-3.png" />
-        <!-- add up to 9 -->
+    <!-- ✅ REQUIRED WRAPPER -->
+    <div class="carousel-track">
+
+      <div class="slide">
+        <img src="images/piece1.jpg" alt="Russian River Map #1">
+        <h3>Russian River Map – #1</h3>
+        <p>$200 · $100 donated</p>
+        <button>Purchase</button>
       </div>
 
-      <h3>Russian River Map — No. 1</h3>
-      <p class="price">$200</p>
-      <p class="donation">$100 donated to Respect Russian River</p>
+      <div class="slide sold">
+        <img src="images/piece2.jpg" alt="Russian River Map #2">
+        <h3>Russian River Map – #2</h3>
+        <p>$200 · $100 donated</p>
+        <button disabled>Sold</button>
+      </div>
 
-      <a
-        class="buy"
-        href="https://buy.stripe.com/YOUR_LINK_HERE"
-        target="_blank"
-      >
-        Purchase
-      </a>
+      <div class="slide">
+        <img src="images/piece3.jpg" alt="Russian River Map – #3">
+        <h3>Russian River Map – #3</h3>
+        <p>$200 · $100 donated</p>
+        <button>Purchase</button>
+      </div>
+
     </div>
+    <!-- ✅ END TRACK -->
 
-    <!-- Duplicate .piece blocks for each work -->
+    <button class="arrow right" onclick="nextSlide()">❯</button>
 
+    <!-- if you’re using dots -->
+    <div class="carousel-dots"></div>
   </div>
 </section>
 
@@ -389,23 +439,73 @@ body.dark .toggle {
     </footer>
 
   </div>
-
 <script>
-  function toggleDark() {
-    document.body.classList.toggle("dark");
+  let currentSlide = 0;
 
-    // Save preference
-    if (document.body.classList.contains("dark")) {
-      localStorage.setItem("theme", "dark");
-    } else {
-      localStorage.setItem("theme", "light");
-    }
+  function reorderSlides() {
+    const track = document.querySelector(".carousel-track");
+    const slides = Array.from(track.children);
+
+    const available = slides.filter(s => !s.classList.contains("sold"));
+    const sold = slides.filter(s => s.classList.contains("sold"));
+
+    track.innerHTML = "";
+    [...available, ...sold].forEach(s => track.appendChild(s));
   }
 
-  // Load saved theme on page load
+  function updateCarousel() {
+    const track = document.querySelector(".carousel-track");
+    const dots = document.querySelectorAll(".carousel-dots button");
+
+    track.style.transform = `translateX(-${currentSlide * 100}%)`;
+
+    dots.forEach((dot, i) => {
+      dot.classList.toggle("active", i === currentSlide);
+    });
+  }
+
+  function nextSlide() {
+    const slides = document.querySelectorAll(".slide");
+    currentSlide = (currentSlide + 1) % slides.length;
+    updateCarousel();
+  }
+
+  function prevSlide() {
+    const slides = document.querySelectorAll(".slide");
+    currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+    updateCarousel();
+  }
+
+  function buildDots() {
+    const slides = document.querySelectorAll(".slide");
+    const dotsContainer = document.querySelector(".carousel-dots");
+    dotsContainer.innerHTML = "";
+
+    slides.forEach((_, i) => {
+      const dot = document.createElement("button");
+      dot.onclick = () => {
+        currentSlide = i;
+        updateCarousel();
+      };
+      dotsContainer.appendChild(dot);
+    });
+  }
+
+  function toggleDark() {
+    document.body.classList.toggle("dark");
+    localStorage.setItem(
+      "theme",
+      document.body.classList.contains("dark") ? "dark" : "light"
+    );
+  }
+
+  // ✅ CORRECT LOAD ORDER
   (function () {
-    const savedTheme = localStorage.getItem("theme");
-    if (savedTheme === "dark") {
+    reorderSlides();   // 1️⃣ move sold to end
+    buildDots();       // 2️⃣ build dots AFTER reorder
+    updateCarousel();  // 3️⃣ sync view
+
+    if (localStorage.getItem("theme") === "dark") {
       document.body.classList.add("dark");
     }
   })();
