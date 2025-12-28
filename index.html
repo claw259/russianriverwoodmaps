@@ -374,6 +374,34 @@ body.dark .toggle {
 body.dark .donation {
   background: rgba(47,111,98,0.22);
 }
+/* Carousel dots → bars */
+.carousel-dots {
+  display: flex;
+  justify-content: center;
+  gap: 0.6rem;
+  margin-top: 1.25rem;
+}
+
+.carousel-dots button {
+  width: 22px;          /* bar width */
+  height: 4px;          /* bar thickness */
+  border-radius: 999px; /* pill shape */
+  border: none;
+  background: rgba(127,209,194,0.3);
+  cursor: pointer;
+  transition: background 0.25s ease, transform 0.25s ease;
+}
+
+.carousel-dots button.active {
+  background: var(--accent);
+  transform: scaleX(1.15); /* subtle emphasis */
+}
+.carousel-dots button:hover {
+  background: rgba(127,209,194,0.6);
+}
+.carousel-dots button.active {
+  transform: scaleX(1.3);
+}
 
 </style>
 
