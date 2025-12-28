@@ -311,6 +311,19 @@ body.dark .toggle {
   box-shadow: 0 18px 45px rgba(0,0,0,0.45);
 }
 
+.carousel-dots button {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(127,209,194,0.4);
+  cursor: pointer;
+}
+
+.carousel-dots button.active {
+  background: var(--accent);
+}
+
 </style>
 
 </head>
@@ -506,6 +519,7 @@ body.dark .toggle {
     </footer>
 
   </div>
+
 <script>
   let currentSlide = 0;
 
@@ -520,21 +534,21 @@ body.dark .toggle {
     [...available, ...sold].forEach(s => track.appendChild(s));
   }
 
-function updateCarousel() {
-  const track = document.querySelector(".carousel-track");
-  const dots = document.querySelectorAll(".carousel-dots button");
-  const slides = document.querySelectorAll(".slide");
+  function updateCarousel() {
+    const track = document.querySelector(".carousel-track");
+    const slides = document.querySelectorAll(".slide");
+    const dots = document.querySelectorAll(".carousel-dots button");
 
-  track.style.transform = `translateX(-${currentSlide * 100}%)`;
+    track.style.transform = `translateX(-${currentSlide * 100}%)`;
 
-  dots.forEach((dot, i) => {
-    dot.classList.toggle("active", i === currentSlide);
-  });
+    slides.forEach((slide, i) => {
+      slide.classList.toggle("active", i === currentSlide);
+    });
 
-  slides.forEach((slide, i) => {
-    slide.classList.toggle("active", i === currentSlide);
-  });
-}
+    dots.forEach((dot, i) => {
+      dot.classList.toggle("active", i === currentSlide);
+    });
+  }
 
   function nextSlide() {
     const slides = document.querySelectorAll(".slide");
@@ -555,10 +569,10 @@ function updateCarousel() {
 
     slides.forEach((_, i) => {
       const dot = document.createElement("button");
-      dot.onclick = () => {
+      dot.addEventListener("click", () => {
         currentSlide = i;
         updateCarousel();
-      };
+      });
       dotsContainer.appendChild(dot);
     });
   }
@@ -571,11 +585,10 @@ function updateCarousel() {
     );
   }
 
-  // ✅ CORRECT LOAD ORDER
   (function () {
-    reorderSlides();   // 1️⃣ move sold to end
-    buildDots();       // 2️⃣ build dots AFTER reorder
-    updateCarousel();  // 3️⃣ sync view
+    reorderSlides();
+    buildDots();
+    updateCarousel();
 
     if (localStorage.getItem("theme") === "dark") {
       document.body.classList.add("dark");
