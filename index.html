@@ -341,6 +341,39 @@ body.dark .toggle {
 .carousel-dots {
   margin-top: 1.25rem;
 }
+.carousel-dots {
+  display: flex;
+  justify-content: center;
+  gap: 0.85rem;
+  margin-top: 1.25rem;
+}
+
+.carousel-dots button {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(127,209,194,0.35);
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.carousel-dots button.active {
+  background: var(--accent);
+  transform: scale(1.15);
+}
+.carousel-dots button:hover {
+  transform: scale(1.25);
+}
+/* Light mode highlight */
+.donation {
+  background: rgba(47,111,98,0.08);
+  border-left: 4px solid var(--accent);
+}
+/* Dark mode highlight */
+body.dark .donation {
+  background: rgba(47,111,98,0.22);
+}
 
 </style>
 
