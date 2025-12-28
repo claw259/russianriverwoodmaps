@@ -402,6 +402,26 @@ body.dark .donation {
 .carousel-dots button.active {
   transform: scaleX(1.3);
 }
+/* Base bars – ALWAYS visible */
+.carousel-dots button {
+  width: 22px;
+  height: 4px;
+  border-radius: 999px;
+  border: none;
+  background: rgba(47,111,98,0.35); /* darker base */
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+/* Active bar */
+.carousel-dots button.active {
+  background: var(--accent);
+}
+
+/* Hover feedback */
+.carousel-dots button:hover {
+  background: rgba(47,111,98,0.6);
+}
 
 </style>
 
