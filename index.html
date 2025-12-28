@@ -300,12 +300,6 @@ body.dark .toggle {
   opacity: 0.6;
 }
 
-.slide.active {
-  opacity: 1;
-  transform: scale(1.02);
-  box-shadow: 0 18px 45px rgba(0,0,0,0.45);
-}
-
 .slide.active img {
   box-shadow: 0 18px 45px rgba(0,0,0,0.45);
 }
@@ -327,6 +321,23 @@ body.dark .toggle {
 }
 .carousel {
   background: transparent;
+}
+.slide {
+  overflow: hidden;
+}
+/* Base state: no heavy shadow */
+.slide img {
+  box-shadow: none;
+  transition: box-shadow 0.25s ease, transform 0.25s ease;
+}
+
+/* Hover state: subtle depth */
+.slide:hover img {
+  box-shadow: 0 10px 24px rgba(0,0,0,0.25);
+  transform: translateY(-2px);
+}
+.slide.active img {
+  box-shadow: 0 8px 20px rgba(0,0,0,0.22);
 }
 
 </style>
